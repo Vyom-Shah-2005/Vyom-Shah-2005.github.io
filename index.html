@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Vyom Shah | Industrial and Systems Engineering, Georgia Tech</title>
+<meta name="description" content="Vyom Shah, Industrial and Systems Engineering at Georgia Tech. Data pipelines, operations research, and process design. Open to Summer 2027 internships.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+html{color-scheme:light}
+body{margin:0;font:400 14px system-ui,sans-serif}
+img{max-width:100%}
+[hidden]{display:none!important}
+
+/* Layout: fixed left rail of section ticks + single scroll column; blueprint grid ground, data-sheet detail blocks */
+:root{
+  --bg:#f6f5f1; --surface:#fffefb; --surface-2:#edebe4; --fg:#191b1f; --muted:#5e6269;
+  --line:#d6d3c9; --accent:#b3741e; --accent-soft:#f0e3cd; --good:#2f6b4f;
+  --display:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --body:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  --maxw:1080px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#13151a; --surface:#1b1e25; --surface-2:#22262e; --fg:#eceae4; --muted:#9ba1ab;
+  --line:#2f343d; --accent:#e0a94e; --accent-soft:#33291a; --good:#6fc39a; color-scheme:dark;}}
+:root[data-theme="dark"]{
+  --bg:#13151a; --surface:#1b1e25; --surface-2:#22262e; --fg:#eceae4; --muted:#9ba1ab;
+  --line:#2f343d; --accent:#e0a94e; --accent-soft:#33291a; --good:#6fc39a; color-scheme:dark;}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.6;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:72px 72px;background-position:-1px -1px;background-attachment:fixed;}
+body::before{content:"";position:fixed;inset:0;background:radial-gradient(120% 70% at 50% 0%,transparent 20%,var(--bg) 78%);pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+.kicker{font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* progress + nav */
+#bar{position:fixed;top:0;left:0;height:3px;background:var(--accent);width:0;z-index:50}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.navin{max-width:var(--maxw);margin:0 auto;display:flex;align-items:center;gap:14px;
+  padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{font-family:var(--display);font-weight:800;font-size:15px;letter-spacing:.02em;white-space:nowrap}
+.navlinks{display:flex;gap:4px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none}
+.navlinks::-webkit-scrollbar{display:none}
+.navlinks a{font-family:var(--mono);font-size:12px;text-decoration:none;color:var(--muted);
+  padding:6px 10px;border-radius:999px;white-space:nowrap;border:1px solid transparent;transition:.18s}
+.navlinks a:hover{color:var(--fg);background:var(--surface-2)}
+.navlinks a[aria-current="true"]{color:var(--fg);border-color:var(--accent);background:var(--accent-soft)}
+.iconbtn{font-family:var(--mono);font-size:12px;cursor:pointer;background:var(--surface);color:var(--fg);
+  border:1px solid var(--line);border-radius:999px;padding:6px 11px}
+.iconbtn:hover{border-color:var(--accent)}
+
+/* hero */
+header.hero{padding-block:clamp(36px,7vw,88px) 40px}
+.hgrid{display:grid;grid-template-columns:1.35fr .9fr;gap:36px;align-items:end}
+h1{font-size:clamp(44px,9vw,92px);line-height:.92;font-weight:800}
+h1 .sec{display:block;color:var(--muted)}
+.tagline{margin-top:18px;font-size:clamp(17px,2.2vw,21px);max-width:34ch;color:var(--muted)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px}
+.btn{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;
+  padding:11px 16px;border:1px solid var(--line);border-radius:3px;background:var(--surface);display:inline-block;transition:.18s}
+.btn:hover{transform:translateY(-2px);border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#17120a}
+:root[data-theme="dark"] .btn.primary,
+.btn.primary{color:#17120a}
+.portrait{border:1px solid var(--line);background:var(--surface);aspect-ratio:4/5;position:relative;overflow:hidden;max-width:100%}
+.portrait svg{width:100%;height:100%;display:block}
+.portrait .cap{position:absolute;left:0;right:0;bottom:0;font-family:var(--mono);font-size:10.5px;color:var(--muted);
+  padding:7px 9px;border-top:1px solid var(--line);background:var(--surface);text-align:center}
+
+/* metric strip */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);background:var(--surface);margin-top:34px}
+.metric{padding:16px 14px;border-right:1px solid var(--line)}
+.metric:last-child{border-right:0}
+.metric b{display:block;font-family:var(--display);font-weight:800;font-size:clamp(24px,4vw,34px);
+  font-variant-numeric:tabular-nums;color:var(--accent);line-height:1.1}
+.metric span{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:block;margin-top:4px}
+
+/* sections */
+section{padding-block:clamp(42px,7vw,74px);border-top:1px solid var(--line)}
+.shead{display:flex;align-items:baseline;gap:14px;margin-bottom:24px}
+.shead h2{font-size:clamp(26px,4.4vw,38px);font-weight:600}
+.shead .num{font-family:var(--mono);font-size:12px;color:var(--accent)}
+.lede{max-width:65ch}
+.lede p+p{margin-top:14px}
+
+/* tabs */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:0;position:relative;z-index:1}
+.tab{font-family:var(--mono);font-size:12px;cursor:pointer;background:var(--surface-2);color:var(--muted);
+  border:1px solid var(--line);border-bottom-color:var(--line);border-radius:3px 3px 0 0;padding:9px 14px}
+.tab[aria-selected="true"]{background:var(--surface);color:var(--fg);border-bottom-color:var(--surface);font-weight:500}
+.panel{border:1px solid var(--line);background:var(--surface);padding:22px;margin-top:-1px}
+.panel h3{font-size:21px;font-weight:600}
+.panel .meta{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:6px 0 14px;letter-spacing:.04em}
+.panel p{max-width:65ch}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.chip{font-family:var(--mono);font-size:11px;padding:4px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+.chip.hi{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+
+/* projects */
+.pgrid{display:grid;gap:16px}
+.proj{border:1px solid var(--line);background:var(--surface)}
+.proj>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:120px 1fr auto;gap:18px;align-items:center;padding:16px 18px}
+.proj>summary::-webkit-details-marker{display:none}
+.proj[open]>summary{border-bottom:1px solid var(--line)}
+.thumb{border:1px solid var(--line);background:var(--surface-2);aspect-ratio:16/10;overflow:hidden}
+.thumb svg{width:100%;height:100%;display:block}
+.proj h3{font-size:19px;font-weight:600}
+.proj .stack{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:5px;letter-spacing:.03em}
+.more{font-family:var(--mono);font-size:11px;color:var(--accent);white-space:nowrap}
+.proj[open] .more{color:var(--muted)}
+.body{padding:18px}
+.body p{max-width:65ch}
+.body p+p{margin-top:12px}
+.statrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);margin:16px 0}
+.statrow div{background:var(--surface);padding:11px 12px}
+.statrow b{display:block;font-family:var(--display);font-weight:800;font-size:19px;font-variant-numeric:tabular-nums}
+.statrow span{font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:4px}
+.links a{font-family:var(--mono);font-size:12px;text-decoration:none;border-bottom:1px solid var(--accent);padding-bottom:1px}
+.links a:hover{color:var(--accent)}
+
+/* skills */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.skillgrid{display:flex;flex-wrap:wrap;gap:8px}
+.skill{font-family:var(--mono);font-size:12.5px;border:1px solid var(--line);background:var(--surface);
+  padding:8px 12px;border-radius:3px;transition:.16s}
+.skill.dim{opacity:.3}
+.awards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:30px}
+.award{border-left:2px solid var(--accent);padding:4px 0 4px 14px}
+.award b{font-family:var(--display);font-weight:600;display:block}
+.award span{font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* timeline */
+.tl{display:grid;gap:0}
+.tlitem{display:grid;grid-template-columns:160px 1fr;gap:20px;padding:20px 0;border-bottom:1px solid var(--line)}
+.tlitem:last-child{border-bottom:0}
+.tlitem .when{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.03em}
+.tlitem h3{font-size:18px;font-weight:600}
+.tlitem .org{font-family:var(--mono);font-size:11.5px;color:var(--accent);margin:4px 0 9px}
+
+/* contact */
+.contact{border:1px solid var(--line);background:var(--surface);padding:clamp(22px,4vw,38px);display:grid;gap:22px;
+  grid-template-columns:1.2fr .8fr;align-items:center}
+.mailrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.mail{font-family:var(--mono);font-size:14px;border:1px dashed var(--line);padding:9px 12px;background:var(--bg);user-select:all}
+.status{display:inline-flex;gap:8px;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--good)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--good)}
+footer{border-top:1px solid var(--line);padding-block:26px;font-family:var(--mono);font-size:11px;color:var(--muted);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+.reveal{opacity:1;transform:none;transition:opacity .5s ease,transform .5s ease}
+.reveal.pend{opacity:.001;transform:translateY(14px)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.reveal.pend{opacity:1;transform:none}}
+@media (max-width:780px){
+  .hgrid{grid-template-columns:1fr}
+  .portrait{max-width:260px}
+  .metrics{grid-template-columns:1fr 1fr}
+  .metric:nth-child(2){border-right:0}
+  .metric:nth-child(1),.metric:nth-child(2){border-bottom:1px solid var(--line)}
+  .proj>summary{grid-template-columns:84px 1fr;gap:12px}
+  .more{display:none}
+  .tlitem{grid-template-columns:1fr;gap:6px}
+  .contact{grid-template-columns:1fr}
+  body{background-size:48px 48px}
+}
+</style>
+</head>
+<body>
+
+
+<div id="bar"></div>
+<nav>
+  <div class="navin">
+    <div class="brand">VYOM SHAH</div>
+    <div class="navlinks" id="navlinks">
+      <a href="#about">About</a><a href="#experience">Experience</a><a href="#projects">Projects</a>
+      <a href="#skills">Skills</a><a href="#leadership">Leadership</a><a href="#contact">Contact</a>
+    </div>
+    <button class="iconbtn" id="theme" type="button" aria-label="Switch theme">Theme</button>
+  </div>
+</nav>
+
+<div class="wrap">
+<header class="hero">
+  <div class="hgrid">
+    <div>
+      <div class="kicker">Industrial &amp; Systems Engineering &middot; Georgia Tech &middot; Class of 2028</div>
+      <h1>Vyom Shah<span class="sec">builds systems that stop wasting people&rsquo;s time.</span></h1>
+      <p class="tagline">AI and Operations Research concentration. Data pipelines, process design, and the surveys that tell you what to build before you build it.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#projects">See the work</a>
+        <a class="btn" href="#experience">Experience</a>
+        <a class="btn" href="https://github.com/Vyom-Shah-2005" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="https://www.linkedin.com/in/vyom-s/" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </div>
+    <figure class="portrait" style="margin:0">
+      <svg viewBox="0 0 320 400" role="img" aria-label="Placeholder portrait frame">
+        <rect width="320" height="400" fill="var(--surface-2)"/>
+        <g stroke="var(--line)" stroke-width="1">
+          <path d="M0 100h320M0 200h320M0 300h320M80 0v400M160 0v400M240 0v400"/>
+        </g>
+        <circle cx="160" cy="165" r="54" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 5"/>
+        <path d="M78 300c12-50 44-74 82-74s70 24 82 74" fill="none" stroke="var(--accent)" stroke-width="1.5" stroke-dasharray="4 5"/>
+        <text x="160" y="172" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" fill="var(--muted)">PHOTO</text>
+      </svg>
+      <figcaption class="cap">Headshot slot &mdash; send me the file</figcaption>
+    </figure>
+  </div>
+
+  <div class="metrics">
+    <div class="metric"><b data-count="73" data-suffix="%">0%</b><span>Attendance lift, Roamio launch</span></div>
+    <div class="metric"><b data-count="97.2" data-suffix="%">0%</b><span>Survey demand, CampusPing</span></div>
+    <div class="metric"><b data-count="48676">0</b><span>Rows cleaned, IMDb model</span></div>
+    <div class="metric"><b data-count="800" data-suffix="+">0</b><span>Students represented, SGA</span></div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="shead"><span class="num">01</span><h2>About</h2></div>
+  <div class="lede">
+    <p>I study Industrial and Systems Engineering at Georgia Tech, concentrating in AI and Operations Research (Class of 2028). I transferred from Georgia State&rsquo;s Honors College, where I took engineering coursework and served as Executive Vice President of the Student Government Association on the Alpharetta campus.</p>
+    <p>A lot of my work starts with messy data or a process that wastes people&rsquo;s time. At Roamio I cleaned up how campus event listings came in. At CampusPing we ran a demand survey before building anything, and 97.2% of respondents said they wanted it.</p>
+    <p>Before Atlanta I lived in Cyprus, where I co-founded a clothing brand and helped organize a UN-partnered youth diplomacy conference. I speak English, Greek, Gujarati, and Hindi. Outside class I take photos with my DSLR, see films in IMAX, and go out to watch World Cup matches.</p>
+  </div>
+  <div class="chips">
+    <span class="chip hi">English</span><span class="chip hi">Greek</span><span class="chip hi">Gujarati</span><span class="chip hi">Hindi</span>
+    <span class="chip">DSLR photography</span><span class="chip">IMAX</span><span class="chip">World Cup</span>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="shead"><span class="num">02</span><h2>Experience</h2></div>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" aria-controls="p-roamio" id="t-roamio">Roamio</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-cp" id="t-cp">CampusPing</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="p-2eazy" id="t-2eazy">2eazy</button>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-roamio" aria-labelledby="t-roamio">
+    <h3>Product Intern</h3>
+    <div class="meta">Roamio &middot; Sep 2025 &ndash; Dec 2025 &middot; Atlanta, GA</div>
+    <p>I built and maintained the event data pipeline, standardizing listings from campus organizations so duplicate and incomplete entries stopped getting through, and set up AI screening for every submission. I also designed A/B tests on notification timing and ran a Likert-scale survey across the organization. We applied the results to the DoorDash-partnered Roamio launch events, and attendance went up 73%.</p>
+    <div class="statrow">
+      <div><b>+73%</b><span>Event attendance</span></div>
+      <div><b>A/B</b><span>Notification timing</span></div>
+      <div><b>AI</b><span>Submission screening</span></div>
+    </div>
+    <div class="chips"><span class="chip">Data pipeline</span><span class="chip">Deduplication</span><span class="chip">Survey design</span><span class="chip">Experimentation</span></div>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-cp" aria-labelledby="t-cp" hidden>
+    <h3>Co-Founder and CMO</h3>
+    <div class="meta">CampusPing &middot; Sep 2025 &ndash; Apr 2026 &middot; Atlanta, GA</div>
+    <p>CampusPing is a class registration tool that sends real-time seat alerts and registers students automatically. I designed, fielded, and analyzed a demand survey across University System of Georgia campuses, wrote the business plan and investor pitch deck, and led in-person marketing at Georgia State.</p>
+    <div class="statrow">
+      <div><b>97.2%</b><span>Interested in survey</span></div>
+      <div><b>3 / 16</b><span>2025 PCIC pitch</span></div>
+      <div><b>$500</b><span>Seed funding won</span></div>
+    </div>
+    <div class="chips"><span class="chip">Market research</span><span class="chip">Pitch deck</span><span class="chip">Go-to-market</span><span class="chip">Business plan</span></div>
+  </div>
+
+  <div class="panel" role="tabpanel" id="p-2eazy" aria-labelledby="t-2eazy" hidden>
+    <h3>Co-Founder</h3>
+    <div class="meta">2eazy &middot; Nov 2021 &ndash; Nov 2023 &middot; Nicosia, Cyprus</div>
+    <p>A clothing brand I co-founded in Cyprus. We sold an eight-product line on Shopify, marketed it through local influencer partnerships, and ran the whole operation from design through fulfillment while still in secondary school.</p>
+    <div class="statrow">
+      <div><b>$8,000</b><span>Revenue over 2 years</span></div>
+      <div><b>32</b><span>SKUs shipped</span></div>
+      <div><b>5</b><span>Influencer partners</span></div>
+    </div>
+    <div class="chips"><span class="chip">Shopify</span><span class="chip">Inventory</span><span class="chip">Brand marketing</span></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="shead"><span class="num">03</span><h2>Projects</h2></div>
+  <p class="lede" style="margin-bottom:22px;color:var(--muted)">Open any card for the method and the numbers.</p>
+  <div class="pgrid">
+
+    <details class="proj" open>
+      <summary>
+        <div class="thumb">
+          <svg viewBox="0 0 160 100" role="img" aria-label="Scatter of predicted versus actual ratings">
+            <rect width="160" height="100" fill="var(--surface-2)"/>
+            <g stroke="var(--line)" stroke-width=".6"><path d="M20 20h126M20 45h126M20 70h126M45 12v76M80 12v76M115 12v76"/></g>
+            <path d="M20 80 L146 26" stroke="var(--accent)" stroke-width="1.2" fill="none"/>
+            <g fill="var(--accent)" opacity=".55">
+              <circle cx="34" cy="74" r="2"/><circle cx="52" cy="66" r="2"/><circle cx="60" cy="72" r="2"/><circle cx="74" cy="56" r="2"/>
+              <circle cx="88" cy="52" r="2"/><circle cx="96" cy="60" r="2"/><circle cx="110" cy="40" r="2"/><circle cx="126" cy="34" r="2"/><circle cx="138" cy="42" r="2"/>
+            </g>
+            <path d="M20 12v76h126" stroke="var(--muted)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Predicting IMDb ratings from pre-release features</h3>
+          <div class="stack">Python &middot; pandas &middot; scikit-learn &middot; BeautifulSoup</div>
+        </div>
+        <span class="more">Details</span>
+      </summary>
+      <div class="body">
+        <p>Can you predict how a film will be rated using only what&rsquo;s known before release? I chunk-read IMDb&rsquo;s public files, scraped box office figures with BeautifulSoup, pulled OMDb metadata, and joined everything on a normalized title key for 48,676 cleaned rows.</p>
+        <div class="statrow">
+          <div><b>0.303</b><span>Linear regression R&sup2;</span></div>
+          <div><b>0.73</b><span>Mean absolute error</span></div>
+          <div><b>62.9%</b><span>KNN test accuracy (k=21)</span></div>
+          <div><b>14%</b><span>Recall on top-rated films</span></div>
+        </div>
+        <p>Genre was the strongest predictor, with a spread of more than 2 rating points. Ratings also fall steadily by decade (correlation &minus;0.909), but that&rsquo;s survivorship bias, not falling quality.</p>
+        <div class="links"><a href="https://github.com/Vyom-Shah-2005" target="_blank" rel="noopener">Code and notebook</a><a href="#contact">Video walkthrough</a></div>
+      </div>
+    </details>
+
+    <details class="proj">
+      <summary>
+        <div class="thumb">
+          <svg viewBox="0 0 160 100" role="img" aria-label="Linked database tables">
+            <rect width="160" height="100" fill="var(--surface-2)"/>
+            <g fill="none" stroke="var(--muted)" stroke-width="1">
+              <rect x="14" y="18" width="42" height="26" rx="2"/><rect x="100" y="14" width="46" height="22" rx="2"/>
+              <rect x="58" y="60" width="46" height="26" rx="2"/><rect x="112" y="58" width="34" height="20" rx="2"/>
+            </g>
+            <g stroke="var(--accent)" stroke-width="1.1" fill="none">
+              <path d="M56 28h44M48 44l26 16M104 72h8M123 36v22"/>
+            </g>
+            <g fill="var(--line)"><rect x="18" y="26" width="34" height="2"/><rect x="18" y="32" width="26" height="2"/><rect x="104" y="22" width="30" height="2"/><rect x="62" y="68" width="34" height="2"/><rect x="62" y="74" width="22" height="2"/></g>
+          </svg>
+        </div>
+        <div>
+          <h3>Ramblin&rsquo; Supplies delivery-network database</h3>
+          <div class="stack">MySQL 8.0 &middot; MySQL Workbench &middot; CS 4400</div>
+        </div>
+        <span class="more">Details</span>
+      </summary>
+      <div class="body">
+        <p>A team project for Database Systems. We took a 15-table delivery-network database from a requirements spec to an EER model to a normalized schema, then wrote 21 stored procedures and 7 reporting views. Every write goes through a procedure that validates first and leaves the database untouched if anything fails.</p>
+        <div class="statrow">
+          <div><b>15</b><span>Tables</span></div>
+          <div><b>21</b><span>Stored procedures</span></div>
+          <div><b>7</b><span>Reporting views</span></div>
+        </div>
+        <p>The routing logic computes fuel cost as Euclidean distance between grid locations and refuses any trip a van can&rsquo;t complete in both directions, so no van can strand itself. Loads run under serializable isolation, so two concurrent loads can&rsquo;t both pass the same capacity check.</p>
+        <div class="links"><a href="https://github.com/Vyom-Shah-2005" target="_blank" rel="noopener">Schema and SQL</a></div>
+      </div>
+    </details>
+
+    <details class="proj">
+      <summary>
+        <div class="thumb">
+          <svg viewBox="0 0 160 100" role="img" aria-label="Buffer rings around school sites along a road">
+            <rect width="160" height="100" fill="var(--surface-2)"/>
+            <path d="M0 74C30 70 44 44 78 40s50 14 82 6" stroke="var(--muted)" stroke-width="3" fill="none"/>
+            <g fill="none" stroke="var(--accent)" stroke-width="1">
+              <circle cx="56" cy="56" r="9"/><circle cx="56" cy="56" r="17" opacity=".6"/><circle cx="56" cy="56" r="26" opacity=".3"/>
+              <circle cx="112" cy="58" r="8"/><circle cx="112" cy="58" r="15" opacity=".6"/>
+            </g>
+            <g fill="var(--accent)"><circle cx="56" cy="56" r="2.4"/><circle cx="112" cy="58" r="2.4"/></g>
+          </svg>
+        </div>
+        <div>
+          <h3>Transportation air pollution exposure at Atlanta schools</h3>
+          <div class="stack">ArcGIS Pro &middot; EPA and GDOT data</div>
+        </div>
+        <span class="more">Details</span>
+      </summary>
+      <div class="body">
+        <p>For my GIS course I measured PM2.5 and traffic exposure around 26 Atlanta-area school campuses. I combined EPA air-quality metrics with GDOT traffic volumes inside 250 m, 500 m, and 1,000 m buffers, then flagged the campuses where the buffers overlap both high-volume arterial roads and elevated PM2.5.</p>
+        <div class="statrow">
+          <div><b>26</b><span>Campuses studied</span></div>
+          <div><b>3</b><span>Buffer distances</span></div>
+          <div><b>1,000 m</b><span>Widest buffer</span></div>
+        </div>
+        <p>The findings are published as a public StoryMap.</p>
+        <div class="links"><a href="https://storymaps.arcgis.com/" target="_blank" rel="noopener">Interactive StoryMap</a></div>
+      </div>
+    </details>
+
+  </div>
+</section>
+
+<section id="skills">
+  <div class="shead"><span class="num">04</span><h2>Skills and awards</h2></div>
+  <div class="filters" id="filters">
+    <button class="iconbtn" data-f="all" aria-current="true">All</button>
+    <button class="iconbtn" data-f="data">Data &amp; programming</button>
+    <button class="iconbtn" data-f="eng">Engineering</button>
+    <button class="iconbtn" data-f="methods">Methods</button>
+  </div>
+  <div class="skillgrid" id="skillgrid">
+    <span class="skill" data-g="data">SQL / MySQL</span><span class="skill" data-g="data">Python</span>
+    <span class="skill" data-g="data">pandas</span><span class="skill" data-g="data">scikit-learn</span>
+    <span class="skill" data-g="data">BeautifulSoup</span><span class="skill" data-g="data">Excel</span><span class="skill" data-g="data">Tableau</span>
+    <span class="skill" data-g="eng">ArcGIS Pro</span><span class="skill" data-g="eng">AutoCAD</span>
+    <span class="skill" data-g="eng">Database design</span><span class="skill" data-g="eng">Object-oriented programming</span><span class="skill" data-g="eng">Soldering</span>
+    <span class="skill" data-g="methods">Data analysis</span><span class="skill" data-g="methods">Visualization</span>
+    <span class="skill" data-g="methods">Process improvement</span><span class="skill" data-g="methods">A/B testing</span><span class="skill" data-g="methods">Survey design</span>
+  </div>
+  <div class="awards">
+    <div class="award"><b>1st place</b><span>AMATYC Math Competition</span></div>
+    <div class="award"><b>STEM Scholar Award</b><span>Awarded twice</span></div>
+    <div class="award"><b>SGA Service Award</b><span>2025</span></div>
+    <div class="award"><b>SGA Legacy Award</b><span>2026</span></div>
+  </div>
+</section>
+
+<section id="leadership">
+  <div class="shead"><span class="num">05</span><h2>Leadership</h2></div>
+  <div class="tl">
+    <div class="tlitem">
+      <div class="when">Apr 2025 &ndash; May 2026</div>
+      <div>
+        <h3>Executive Vice President, Student Government Association</h3>
+        <div class="org">Georgia State University</div>
+        <p>I represented 800+ students on the Alpharetta campus and interviewed and picked a team of 15 to carry out our 2025&ndash;26 &ldquo;Collaboration and Service&rdquo; plan. Working with the University-Wide Executive Committee and deans, we ran involvement fairs, intercampus events, blood drives, clothing drives, and Salvation Army gift donations.</p>
+      </div>
+    </div>
+    <div class="tlitem">
+      <div class="when">Aug 2024 &ndash; May 2026</div>
+      <div>
+        <h3>Founder and President, Alpharetta Campus Math Club</h3>
+        <div class="org">Georgia State University</div>
+        <p>I wrote the club&rsquo;s governing legislation, recruited a 5-member executive team and a faculty advisor, and grew it to 30+ members. We hosted the AMATYC national math competition on campus, started faculty-led tutoring for gateway math courses, and toured Delta TechOps.</p>
+      </div>
+    </div>
+    <div class="tlitem">
+      <div class="when">Aug 2022 &ndash; Dec 2022</div>
+      <div>
+        <h3>Organizer, Intercommunal Youth Diplomacy Conference</h3>
+        <div class="org">UN-partnered &middot; Nicosia, Cyprus</div>
+        <p>I handled technology and logistics for a UN-funded youth peace conference. That meant coordinating with UNFICYP peacekeeping forces, securing the Ledra Palace Hotel in the UN buffer zone as the venue, and recruiting sponsors.</p>
+      </div>
+    </div>
+    <div class="tlitem">
+      <div class="when">Ongoing</div>
+      <div>
+        <h3>Service and campus roles</h3>
+        <div class="org">American Red Cross &middot; Georgia State</div>
+        <p>Blood Program Leader and donor with the American Red Cross, through drives that helped 165 patients. Also Student Ambassador for the Student Alumni Association, Administrative Coordinator for the STEM Careers Club, and Secretary of the Premed Association.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="shead"><span class="num">06</span><h2>Contact</h2></div>
+  <div class="contact">
+    <div>
+      <div class="status"><span class="dot"></span>Open to Summer 2027 internships</div>
+      <p style="margin-top:12px;max-width:50ch">Looking for industrial and systems engineering roles in operations research, analytics, or product. Email is the best way to reach me.</p>
+      <div class="mailrow">
+        <span class="mail" id="mail">vyomshah150@gmail.com</span>
+        <button class="iconbtn" id="copy" type="button">Copy</button>
+      </div>
+    </div>
+    <div class="links" style="flex-direction:column;align-items:flex-start;gap:12px">
+      <a href="https://www.linkedin.com/in/vyom-s/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/Vyom-Shah-2005" target="_blank" rel="noopener">GitHub</a>
+      <a href="#projects">Project index</a>
+    </div>
+  </div>
+  <footer>
+    <span>Vyom Shah &middot; Atlanta, GA</span>
+    <span>ISyE, Georgia Tech &middot; Class of 2028</span>
+  </footer>
+</section>
+</div>
+
+<script>
+(function(){
+  // scroll progress
+  var bar=document.getElementById('bar');
+  function prog(){var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;
+    bar.style.width=(m>0?(h.scrollTop||document.body.scrollTop)/m*100:0)+'%';}
+  document.addEventListener('scroll',prog,{passive:true});prog();
+
+  // theme toggle
+  var root=document.documentElement,btn=document.getElementById('theme');
+  function cur(){var a=root.getAttribute('data-theme');if(a)return a;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  btn.addEventListener('click',function(){
+    var n=cur()==='dark'?'light':'dark';root.setAttribute('data-theme',n);
+    try{localStorage.setItem('vs-theme',n);}catch(e){}
+  });
+  try{var s=localStorage.getItem('vs-theme');if(s)root.setAttribute('data-theme',s);}catch(e){}
+
+  // scroll spy
+  var links=[].slice.call(document.querySelectorAll('#navlinks a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function spy(){
+    var y=window.scrollY+140,best=-1;
+    secs.forEach(function(s,i){if(s&&s.offsetTop<=y)best=i;});
+    links.forEach(function(a,i){if(i===best)a.setAttribute('aria-current','true');else a.removeAttribute('aria-current');});
+  }
+  document.addEventListener('scroll',spy,{passive:true});spy();
+
+  // tabs
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function pick(t){
+    tabs.forEach(function(x){
+      var on=x===t;x.setAttribute('aria-selected',on?'true':'false');
+      document.getElementById(x.getAttribute('aria-controls')).hidden=!on;
+    });
+  }
+  tabs.forEach(function(t){
+    t.addEventListener('click',function(){pick(t);});
+    t.addEventListener('keydown',function(e){
+      var i=tabs.indexOf(t);
+      if(e.key==='ArrowRight'){var n=tabs[(i+1)%tabs.length];n.focus();pick(n);}
+      if(e.key==='ArrowLeft'){var p=tabs[(i-1+tabs.length)%tabs.length];p.focus();pick(p);}
+    });
+  });
+
+  // skill filter
+  var fil=document.getElementById('filters');
+  fil.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-f]');if(!b)return;
+    [].slice.call(fil.children).forEach(function(x){x.removeAttribute('aria-current');});
+    b.setAttribute('aria-current','true');
+    var f=b.getAttribute('data-f');
+    [].slice.call(document.querySelectorAll('#skillgrid .skill')).forEach(function(s){
+      s.classList.toggle('dim',f!=='all'&&s.getAttribute('data-g')!==f);
+    });
+  });
+
+  // copy email
+  var cp=document.getElementById('copy');
+  cp.addEventListener('click',function(){
+    var txt=document.getElementById('mail').textContent.trim();
+    function done(){cp.textContent='Copied';setTimeout(function(){cp.textContent='Copy';},1600);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done,select);
+    } else select();
+    function select(){
+      var r=document.createRange();r.selectNodeContents(document.getElementById('mail'));
+      var s=window.getSelection();s.removeAllRanges();s.addRange(r);cp.textContent='Select + copy';
+      setTimeout(function(){cp.textContent='Copy';},2200);
+    }
+  });
+
+  // count up metrics
+  var mets=[].slice.call(document.querySelectorAll('.metric b'));
+  function fmt(v,dec){return dec?v.toFixed(1):Math.round(v).toLocaleString('en-US');}
+  function run(el){
+    var target=parseFloat(el.getAttribute('data-count')),suf=el.getAttribute('data-suffix')||'';
+    var dec=(el.getAttribute('data-count').indexOf('.')>-1)?1:0,t0=null;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){el.textContent=fmt(target,dec)+suf;return;}
+    function step(t){if(!t0)t0=t;var p=Math.min((t-t0)/900,1);var e=1-Math.pow(1-p,3);
+      el.textContent=fmt(target*e,dec)+suf;if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  }
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){
+      if(en.isIntersecting){run(en.target);io.unobserve(en.target);}});},{threshold:.4});
+    mets.forEach(function(m){io.observe(m);});
+  } else mets.forEach(run);
+})();
+</script>
+
+</body>
+</html>
